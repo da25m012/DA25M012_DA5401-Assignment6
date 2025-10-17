@@ -63,29 +63,33 @@ Comprehensive comparison of all four approaches across multiple performance metr
 
 ## Key Results
 
-## 📊 Results Summary
+### Performance Comparison
+| Model | Accuracy | Precision (Class 1) | Recall (Class 1) | F1-Score (Class 1) | Weighted Avg F1 |
+|-------|----------|-------------------|------------------|-------------------|----------------|
+| Median Imputation | 0.6802 | 0.3675 | 0.6187 | 0.4611 | 0.7037 |
+| Linear Regression Imputation | 0.6813 | 0.3691 | 0.6217 | 0.4632 | 0.7048 |
+| Non-Linear Regression Imputation | 0.6815 | 0.3693 | 0.6217 | 0.4634 | 0.7049 |
+| Listwise Deletion | 0.6900 | 0.3804 | 0.6494 | 0.4798 | 0.7133 |
 
-| Model | Accuracy | Macro F1 | Weighted F1 | Notes |
-|:------|:---------:|:---------:|:------------:|:------|
-| Median Imputation | 0.6828 | 0.6204 | 0.7063 | Simple but effective baseline |
-| Linear Regression Imputation | 0.6858 | **0.6235** | **0.7078** | Best overall performance |
-| Non-Linear Regression Imputation | 0.6837 | 0.6200 | 0.7086 | Slightly overfits; no clear gain |
-| Listwise Deletion | 0.6844 | 0.6296 | 0.7063 | Reduced data size, minor drop in recall |
+### Key Insights
+1. **Listwise Deletion** shows slightly better performance metrics but reduces dataset size from 1327 to 1178 samples
+2. **Non-Linear Regression Imputation** performs marginally better than linear regression
+3. All imputation methods preserve the full dataset while maintaining comparable performance
+4. The small performance differences suggest that the missing data mechanism is well-handled by all methods
+
+## Recommendations
+
+**Preferred Method: Non-Linear Regression Imputation** 
 
 
-## 🧠 Efficacy Discussion (Summary)
-- **Listwise Deletion** discards data, which slightly reduces generalization capability due to smaller sample size.  
-- **Imputation-based models** preserve full data, improving stability and balance.  
-- **Linear Regression Imputation** provides the best trade-off between bias and variance, outperforming both simpler (median) and more complex (non-linear) approaches.  
-- The relationship between predictors and the imputed feature appears largely **linear**, explaining why non-linear methods did not offer a performance advantage.
+### Why Non-Linear Regression Imputation?
+1. **Data Retention**: Maintains all 30,000 data points
+2. **Flexibility**: Captures complex, non-linear relationships in the data
+3. **Performance**: Slightly better than linear regression imputation
+4. **Generalizability**: Avoids biases from data deletion
+5. **Robustness**: Preserves statistical power and minority class representation
 
----
-
-## ✅ Final Recommendation
-**Linear Regression Imputation** is recommended as the optimal approach for this dataset.  
-It:
-- Retains all observations without introducing bias from data loss.  
-- Captures relationships among features for more realistic imputations.  
-- Provides the highest and most stable performance across metrics.  
-
-Thus, it offers an ideal balance between **data completeness, interpretability, and predictive accuracy**.
+### Trade-off Considerations
+- **Listwise Deletion**: Better metrics but risks information loss and selection bias
+- **Linear Regression**: Simpler but may miss complex patterns
+- **Non-Linear Regression**: Best balance of performance and data preservation
